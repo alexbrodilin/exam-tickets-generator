@@ -1,0 +1,58 @@
+#!/bin/bash
+# input questions list
+SRC_LIST="/media/hpsanek/Data/grive/JOBS/UMKD/Sys_software/RK1-questions.txt"
+# output questions list
+OUT_LIST="/media/hpsanek/Data/grive/JOBS/UMKD/Sys_software/RK1-questions_READY.txt"
+# temp file for shuffled list
+SHUF_LIST="/home/hpsanek/SHUFF_LIST.txt"
+# questions per ticket
+Q_PER_TICK=2
+# total amount of tickets
+TOTAL_TICK=20
+
+# clean old output file
+echo "" > $OUT_LIST
+
+ticks=0
+
+while (( ticks < TOTAL_TICK ))
+do
+ 
+	# shuffle questions
+	cat $SRC_LIST | sed '/^$/d' | shuf > $SHUF_LIST
+
+	# questions per ticket counter
+	num=0
+	
+	
+	# cut shuffled list by Q_PER_TICK questions
+	while read line 
+	do
+		
+		# write ticket title
+		if [[ "$num" -eq "0" ]]
+		then
+			echo "Билет № $(($ticks+1))" >> $OUT_LIST
+			echo "----------" >> $OUT_LIST
+		fi
+		num=$(($num+1))
+		if [ "$num" -gt "$Q_PER_TICK" ]
+		then
+			echo "" >> $OUT_LIST
+			
+			num=0
+			ticks=$(($ticks+1))
+			
+			# if it's enough tickets, exit
+			if [[ "$ticks" -eq "$TOTAL_TICK" ]]
+			then
+				break
+			fi
+		else
+			echo "$num. $line" >> $OUT_LIST
+		fi
+	done < $SHUF_LIST
+
+	rm $SHUF_LIST
+done
+
