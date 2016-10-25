@@ -1,10 +1,12 @@
 #!/bin/bash
 # input questions list
-SRC_LIST="/media/hpsanek/Data/grive/JOBS/UMKD/Sys_software/RK1-questions.txt"
+SRC_LIST="path-to-questions-list-txt-file"
 # output questions list
-OUT_LIST="/media/hpsanek/Data/grive/JOBS/UMKD/Sys_software/RK1-questions_READY.txt"
+OUT_LIST="path-to-ready-exam-tickets-list-txt-file"
 # temp file for shuffled list
-SHUF_LIST="/home/hpsanek/SHUFF_LIST.txt"
+SHUF_LIST="path-to-temp-txt-file-for-questions-shuffling"
+# ticket title for final list of tickets. For example: Ticket No.
+TICK_TITLE="Билет №"
 # questions per ticket
 Q_PER_TICK=2
 # total amount of tickets
@@ -32,7 +34,7 @@ do
 		# write ticket title
 		if [[ "$num" -eq "0" ]]
 		then
-			echo "Билет № $(($ticks+1))" >> $OUT_LIST
+			echo "$TICK_TITLE $(($ticks+1))" >> $OUT_LIST
 			echo "----------" >> $OUT_LIST
 		fi
 		num=$(($num+1))
