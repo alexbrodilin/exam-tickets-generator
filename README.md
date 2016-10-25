@@ -1,5 +1,5 @@
 # exam-tickets-generator
-Bash scripts which useful to generate exam tickets from given questions list.
+Bash script which useful to generate exam tickets from given questions list.
 # Configuration parameters
 # input questions list
 SRC_LIST="path-to-questions-list-txt-file"
